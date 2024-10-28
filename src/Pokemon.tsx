@@ -14,7 +14,7 @@ interface IPokemonProps {
 
 const Pokemon: FC<IPokemonProps> = ({ pokemon, onPokemonClick }) => {
     return (
-        <Card sx={{ maxWidth: 500, mb: 2, mt: 2 }}>
+        <Card sx={{ mb: 2, mt: 2 }}>
             <CardActionArea onClick={() => onPokemonClick(pokemon.url)}>
                 <CardContent>
                     <CardMedia

@@ -5,6 +5,7 @@ import Pokemon from './Pokemon';
 import PaginationControls from './Pagination';
 import { useTheme } from '@mui/material/styles';
 import CustomModal from './Modal';
+import Masonry from '@mui/lab/Masonry';
 
 const limit = 20;
 
@@ -46,6 +47,7 @@ const PokemonList = () => {
             const response: IPokemon = await fetchPokemon.json();
             setSelectedPokemon(response);
             setModalOpen(true);
+            console.log(response, 'response')
         } catch (error) {
             console.log(error, 'error')
         } finally {
@@ -82,11 +84,15 @@ const PokemonList = () => {
             )}
 
             <Box sx={{ padding: '0 2%' }}>
-                {pokemons.map((pokemon: IPokemon, index: number) => (
-                    <Pokemon pokemon={pokemon} key={index} onPokemonClick={(url) => {
-                        fetchPokemonDetails(url);
-                    }} />
-                ))}
+                <Box sx={{ width: '100%', minHeight: 829 }}>
+                    <Masonry columns={3} spacing={2}>
+                        {pokemons.map((pokemon: IPokemon, index: number) => (
+                            <Pokemon pokemon={pokemon} key={index} onPokemonClick={(url) => {
+                                fetchPokemonDetails(url);
+                            }} />
+                        ))}
+                    </Masonry>
+                </Box>
                 <PaginationControls activePage={activePage}
                     limit={limit}
                     totalCount={totalCount}
