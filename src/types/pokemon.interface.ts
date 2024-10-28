@@ -10,3 +10,9 @@ export interface IGetPokemonsResponse {
     previous: string | null;
     results: IPokemon[];
 }
+
+export interface IPokemonDetails extends IPokemon {
+    height: number;
+    order: number;
+    weight: number;
+}

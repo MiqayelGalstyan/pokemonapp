@@ -1,6 +1,6 @@
 import { Backdrop, Box, Button, Card, CardActionArea, CardContent, CardMedia, CircularProgress, Typography } from '@mui/material';
 import React, { useEffect, useState } from 'react';
-import { IGetPokemonsResponse, IPokemon } from './types/pokemon.interface';
+import { IGetPokemonsResponse, IPokemon, IPokemonDetails } from './types/pokemon.interface';
 import Pokemon from './Pokemon';
 import PaginationControls from './Pagination';
 import { useTheme } from '@mui/material/styles';
@@ -17,7 +17,7 @@ const PokemonList = () => {
     const [prevPageUrl, setPrevPageUrl] = useState<string | null>(null);
     const [totalCount, setTotalCount] = useState<number>(0);
     const [modalOpen, setModalOpen] = useState(false);
-    const [selectedPokemon, setSelectedPokemon] = useState<IPokemon | null>(null);
+    const [selectedPokemon, setSelectedPokemon] = useState<IPokemonDetails | null>(null);
 
     const theme = useTheme();
 
@@ -44,7 +44,7 @@ const PokemonList = () => {
         try {
             setLoading(true);
             const fetchPokemon = await fetch(`${url}`);
-            const response: IPokemon = await fetchPokemon.json();
+            const response: IPokemonDetails = await fetchPokemon.json();
             setSelectedPokemon(response);
             setModalOpen(true);
             console.log(response, 'response')
@@ -64,6 +64,9 @@ const PokemonList = () => {
         setModalOpen(false);
         setSelectedPokemon(null);
     }
+
+
+    console.log(selectedPokemon, 'selectedPokemon')
 
     return (
         <>
@@ -119,10 +122,19 @@ const PokemonList = () => {
                                         component="img"
                                         height="300"
                                         image={`https://img.pokemondb.net/artwork/large/${selectedPokemon.name}.jpg`}
-                                        alt={selectedPokemon.name || ''}
+                                        alt={selectedPokemon.name}
                                     />
                                     <Typography gutterBottom variant="h5" component="div">
-                                        {selectedPokemon.name || ""}
+                                        {selectedPokemon.name}
+                                    </Typography>
+                                    <Typography gutterBottom variant="body2" component="div">
+                                        Height:   {selectedPokemon.height}
+                                    </Typography>
+                                    <Typography gutterBottom variant="body2" component="div">
+                                        Weight:   {selectedPokemon.weight}
+                                    </Typography>
+                                    <Typography gutterBottom variant="body2" component="div">
+                                        Order:   {selectedPokemon.order}
                                     </Typography>
                                 </CardContent>
                             </CardActionArea>
